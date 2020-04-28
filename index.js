@@ -85,8 +85,6 @@ client.on('message', async msg => {
       params = [];
     }
 
-    console.log(params);
-
     // Commands
     // Give
     if (command === 'give') {
