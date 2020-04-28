@@ -89,6 +89,7 @@ client.on('message', async msg => {
     if (command === 'give') {
       if (msg.author.id !== '203694377648914432') {
         msg.reply('No you dingus, only Caden can give GBP!');
+        return;
       }
       var amount = 0;
       var amountFound = false;
@@ -123,6 +124,7 @@ client.on('message', async msg => {
     } else if (command === 'take') {
       if (msg.author.id !== '203694377648914432') {
         msg.reply('Only the great and mighty Caden may take GBP.');
+        return;
       }
       var amount = 0;
       var amountFound = false;
