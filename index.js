@@ -97,7 +97,7 @@ client.on('message', async msg => {
       var reason = [];
       for (var param of params) {
         let parsed = parseInt(param);
-        if (!param.startsWith('<@!') && !isNaN(parsed)) {
+        if (!param.startsWith('<@') && !isNaN(parsed)) {
           if (amountFound && !multipleAmountsFound) {
             msg.channel.send('Multiple amounts detected, please input only one amount.');
             multipleAmountsFound = true;
@@ -105,7 +105,7 @@ client.on('message', async msg => {
             amount = parsed;
             amountFound = true;
           }
-        } else if (!param.startsWith('<@!')) {
+        } else if (!param.startsWith('<@')) {
           reason.push(param);
         }
       }
@@ -132,7 +132,7 @@ client.on('message', async msg => {
       var reason = [];
       for (var param of params) {
         let parsed = parseInt(param);
-        if (!param.startsWith('<@!') && !isNaN(parsed)) {
+        if (!param.startsWith('<@') && !isNaN(parsed)) {
           if (amountFound) {
             msg.channel.send('Multiple amounts detected, please input only one amount.');
             multipleAmountsFound = true;
@@ -140,7 +140,7 @@ client.on('message', async msg => {
             amount = parsed;
             amountFound = true;
           }
-        } else if (!param.startsWith('<@!')) {
+        } else if (!param.startsWith('<@')) {
           reason.push(param);
         }
       }
