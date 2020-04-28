@@ -194,15 +194,20 @@ client.on('message', async msg => {
           msg.channel.send(logMessage);
         }
       } else if (mentions.length === 1) {
-        var logs = await getLogs(mentions[0]);
-        if (logs.length === 0) {
-          msg.channel.send(`<@!${mentions[0]}>, you have no logs yet. Try being a good boi to get some points!`);
+        var balance = await getBalance(mentions[0]);
+        if (balance < 10) {
+          msg.channel.send(`<@!${msg.author.id}> you do not have sufficient GBP for this command.`);
         } else {
-          var logMessage = `Here are the ${logs.length} most recent logs for <@!${mentions[0]}>:`;
-          for (var log of logs) {
-            logMessage += `\n**[${moment(log.Timestamp).format('M/D/YYYY h:mm:ss A')}]:** ${log.Reason} *(${log.PointsChange} GBP)*`;
+          var logs = await getLogs(mentions[0]);
+          if (logs.length === 0) {
+            msg.channel.send(`<@!${mentions[0]}>, you have no logs yet. Try being a good boi to get some points!`);
+          } else {
+            var logMessage = `Here are the ${logs.length} most recent logs for <@!${mentions[0]}>:`;
+            for (var log of logs) {
+              logMessage += `\n**[${moment(log.Timestamp).format('M/D/YYYY h:mm:ss A')}]:** ${log.Reason} *(${log.PointsChange} GBP)*`;
+            }
+            msg.channel.send(logMessage);
           }
-          msg.channel.send(logMessage);
         }
       } else {
         msg.channel.send('Currently, you can only check balances for yourself or one other user.');
@@ -242,6 +247,7 @@ client.on('message', async msg => {
 **Good Boi Points Commands**
 \`balance\`: Check how many GBP you have. (FREE)
 \`balance <mention>\`: Check how many GBP another user has. (10 GBP)
+\`logs\`: Check the 5 most recent GBP balance change logs for yourself. (FREE)
 \`logs <mention>\`: Check the 5 most recent GBP balance change logs for the mentioned user. (10 GBP)
 \`tendies\`: Buy some tendies. (50 GBP)
 \`mussy\`: Buy some honey mustard. (25 GBP)
