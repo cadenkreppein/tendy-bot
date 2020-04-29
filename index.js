@@ -87,10 +87,6 @@ client.on('message', async msg => {
     // Commands
     // Give
     if (command === 'give') {
-      if (msg.author.id !== '203694377648914432') {
-        msg.reply('No you dingus, only Caden can give GBP!');
-        return;
-      }
       var amount = 0;
       var amountFound = false;
       var multipleAmountsFound = false;
@@ -114,7 +110,11 @@ client.on('message', async msg => {
         msg.channel.send('No users were specified to receive GBP.');
       } else if (amountFound && !multipleAmountsFound) {
         for (var userId of mentions) {
-          changeBalance(userId, amount, reason.join(' '));
+          if (msg.author.id === userId) {
+            msg.channel.send('You can\'t award yourself GBP.');
+          } else {
+            changeBalance(userId, amount, reason.join(' '));
+          }
         }
         msg.channel.send('GBP awarded.');
       } else if (!amountFound) {
@@ -249,6 +249,7 @@ client.on('message', async msg => {
 **Good Boi Points Commands**
 \`balance\`: Check how many GBP you have. (FREE)
 \`balance <mention>\`: Check how many GBP another user has. (10 GBP)
+\`give <mention> <amount> <reason>\`: Give the mentioned user(s) an amount of GBP (reason optional). (FREE)
 \`logs\`: Check the 5 most recent GBP balance change logs for yourself. (FREE)
 \`logs <mention>\`: Check the 5 most recent GBP balance change logs for the mentioned user. (10 GBP)
 \`tendies\`: Buy some tendies. (50 GBP)
